@@ -18,10 +18,8 @@ body {
 /* Header Styles */
 h1 {
     font-size: 2.5rem;
-    color: #58a6ff; /* Bright blue for headings */
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px #58a6ff; /* Glow effect */
-    animation: slideDown 1.5s ease-out; /* Slide-in animation */
+    color: black; /* Change font color to black */
+    text-shadow: 0 0 2px #58a6ff, 0 0 4px #58a6ff; /* Blue outline */
 }
 
 /* Paragraph Styles */
