@@ -1,0 +1,89 @@
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0d1117; /* Dark background */
+    color: #c9d1d9; /* Soft white text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden; /* Hide scrollbars for a clean look */
+    animation: fadeIn 2s ease-in; /* Smooth fade-in animation */
+}
+
+/* Header Styles */
+h1 {
+    font-size: 2.5rem;
+    color: #58a6ff; /* Bright blue for headings */
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #58a6ff; /* Glow effect */
+    animation: slideDown 1.5s ease-out; /* Slide-in animation */
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1.2rem;
+    color: #8b949e; /* Subdued text color */
+    margin-bottom: 20px;
+    animation: fadeIn 2.5s ease-in; /* Delayed fade-in */
+}
+
+/* Button Styles */
+button {
+    background-color: #21262d; /* Dark button background */
+    color: #c9d1d9; /* Light text */
+    border: 1px solid #30363d; /* Subtle border */
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Soft shadow */
+    animation: pulse 2s infinite; /* Subtle pulsing effect */
+}
+
+button:hover {
+    background-color: #30363d; /* Slightly lighter on hover */
+    border-color: #58a6ff; /* Glow-like border on hover */
+    color: #58a6ff;
+    transform: scale(1.1); /* Grow effect */
+}
+
+button:active {
+    box-shadow: 0 0 15px #58a6ff; /* Stronger glow on click */
+    transform: scale(0.98); /* Click animation */
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 10px #58a6ff;
+    }
+}
