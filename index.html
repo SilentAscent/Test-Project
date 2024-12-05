@@ -5,68 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radiowaves</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Radiowaves</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
     <main>
         <section id="home">
             <div class="hero">
-                <h2>Welcome to Radiowaves</h2>
-                <p>Explore the world of music, podcasts, and more.</p>
-                <button class="cta-button">Get Started</button>
+                <h1>Radiowaves</h1>
+                <p>Discover music, moods, and genres from around the world.</p>
             </div>
         </section>
         <section id="stations-container">
-            <h3>Top Radio Stations</h3>
-            <label for="search-bar">Search for a Station:</label>
-            <input type="text" id="search-bar" placeholder="Enter station name..." />
-            <br />
-            <label for="genre-filter">Filter by Genre:</label>
-            <select id="genre-filter">
-                <option value="all">All Genres</option>
-                <option value="pop">Pop</option>
-                <option value="rock">Rock</option>
-                <option value="jazz">Jazz</option>
-                <option value="classical">Classical</option>
-                <option value="hiphop">Hip Hop</option>
-            </select>
-            <br />
-            <label for="mood-filter">Filter by Mood:</label>
-            <select id="mood-filter">
-                <option value="all">All Moods</option>
-                <option value="happy">Happy</option>
-                <option value="chill">Chill</option>
-                <option value="energetic">Energetic</option>
-                <option value="romantic">Romantic</option>
-            </select>
-            <br />
-            <label for="country-filter">Filter by Country:</label>
-            <select id="country-filter">
-                <option value="all">All Locations</option>
-            </select>
+            <div class="filters">
+                <input type="text" id="search-bar" placeholder="Search for a station..." />
+                <select id="genre-filter">
+                    <option value="all">All Genres</option>
+                    <option value="pop">Pop</option>
+                    <option value="rock">Rock</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="classical">Classical</option>
+                    <option value="hiphop">Hip Hop</option>
+                </select>
+                <select id="mood-filter">
+                    <option value="all">All Moods</option>
+                    <option value="happy">Happy</option>
+                    <option value="chill">Chill</option>
+                    <option value="energetic">Energetic</option>
+                    <option value="romantic">Romantic</option>
+                </select>
+                <select id="country-filter">
+                    <option value="all">All Locations</option>
+                </select>
+            </div>
             <div id="stations">Loading stations...</div>
         </section>
         <section id="about">
-            <h2>About Us</h2>
-            <p>This is a beginner-friendly project to recreate a modern website.</p>
+            <h2>About Radiowaves</h2>
+            <p>Radiowaves connects you to the best music and radio from around the world, tailored to your moods and genres.</p>
         </section>
         <section id="contact">
             <h2>Contact Us</h2>
-            <p>Email: example@radiowaves.com</p>
+            <p>Email: support@radiowaves.com</p>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Radiowaves</p>
-    </footer>
     <script src="script.js"></script>
 </body>
 </html>
