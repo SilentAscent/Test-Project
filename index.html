@@ -24,20 +24,37 @@
                 <p>Explore the world of music, podcasts, and more.</p>
                 <button class="cta-button">Get Started</button>
             </div>
-            <div id="stations-container">
-                <h3>Top Radio Stations</h3>
-                <label for="search-bar">Search for a Station:</label>
-                <input type="text" id="search-bar" placeholder="Enter station name..." />
-                <br />
-                <label for="country-filter">Filter by Country:</label>
-                <select id="country-filter">
-                    <option value="all">All Locations</option>
-                </select>
-                <div id="stations">Loading stations...</div>
-            </div>
-            
-            
-        </section>              
+        </section>
+        <section id="stations-container">
+            <h3>Top Radio Stations</h3>
+            <label for="search-bar">Search for a Station:</label>
+            <input type="text" id="search-bar" placeholder="Enter station name..." />
+            <br />
+            <label for="genre-filter">Filter by Genre:</label>
+            <select id="genre-filter">
+                <option value="all">All Genres</option>
+                <option value="pop">Pop</option>
+                <option value="rock">Rock</option>
+                <option value="jazz">Jazz</option>
+                <option value="classical">Classical</option>
+                <option value="hiphop">Hip Hop</option>
+            </select>
+            <br />
+            <label for="mood-filter">Filter by Mood:</label>
+            <select id="mood-filter">
+                <option value="all">All Moods</option>
+                <option value="happy">Happy</option>
+                <option value="chill">Chill</option>
+                <option value="energetic">Energetic</option>
+                <option value="romantic">Romantic</option>
+            </select>
+            <br />
+            <label for="country-filter">Filter by Country:</label>
+            <select id="country-filter">
+                <option value="all">All Locations</option>
+            </select>
+            <div id="stations">Loading stations...</div>
+        </section>
         <section id="about">
             <h2>About Us</h2>
             <p>This is a beginner-friendly project to recreate a modern website.</p>
