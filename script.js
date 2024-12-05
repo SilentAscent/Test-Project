@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (country === 'all') {
             apiUrl = 'https://de1.api.radio-browser.info/json/stations';
         } else {
-            apiUrl = `https://de1.api.radio-browser.info/json/stations/bycountry/${country}`;
+            apiUrl = `https://de1.api.radio-browser.info/json/stations/bycountry/${encodeURIComponent(country)}`;
         }
 
         try {
             const response = await fetch(apiUrl);
-            allStations = await response.json();
-
+            const stations = await response.json();
+            allStations = stations || [];
             displayStations(allStations);
         } catch (error) {
             console.error('Error fetching stations:', error);
@@ -46,25 +46,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Display stations in a grid
     function displayStations(stations) {
         stationContainer.innerHTML = ''; // Clear previous stations
-
-        if (stations.length === 0) {
+    
+        if (!stations || stations.length === 0) {
             stationContainer.innerHTML = '<p>No stations found for this location.</p>';
             return;
         }
-
-        stations.forEach(station => {
+    
+        stations.slice(0, 20).forEach(station => {
+            if (!station.url_resolved || station.url_resolved === "") {
+                console.warn(`Invalid station: ${station.name}`);
+                return; // Skip invalid stations
+            }
+    
             const stationElement = document.createElement('div');
             stationElement.className = 'station';
-
+    
             stationElement.innerHTML = `
                 <h3>${station.name}</h3>
                 <p>${station.country}</p>
-                <audio controls>
+                <audio controls onerror="this.style.display='none'">
                     <source src="${station.url_resolved}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             `;
-
+    
             stationContainer.appendChild(stationElement);
         });
     }
