@@ -42,10 +42,10 @@ footer {
 .hero {
     text-align: center;
     padding: 50px 20px;
-    background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
     color: white;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background-color: #161b22; /* Optional: Add a plain background color */
 }
 
 .hero h2 {
@@ -73,6 +73,7 @@ footer {
 .cta-button:hover {
     background-color: #357ab8;
 }
+
 /* Radio Stations Section */
 #stations-container {
     margin-top: 20px;
