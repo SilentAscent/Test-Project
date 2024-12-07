@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Filter stations based on search
+    // Filter stations and focus on the map
     function filterStations() {
         const searchQuery = searchBar.value.toLowerCase();
 
@@ -63,15 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
         stations.forEach(station => {
             if (station.geo_lat && station.geo_long) {
                 const marker = L.circleMarker([station.geo_lat, station.geo_long], {
-                    radius: 6,
-                    fillColor: '#000',
-                    color: '#fff',
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.9
+                    radius: 5,
+                    color: 'black',
+                    fillColor: 'black',
+                    fillOpacity: 1,
                 }).addTo(map);
-
-                marker.bindPopup(`<strong>${station.name}</strong>`);
+                marker.bindPopup(`<strong>${station.name}</strong><br>${station.country}`);
                 marker.on('click', () => displayStationInfo(station));
                 allMarkers.push(marker);
             }
@@ -82,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayStationInfo(station) {
         stationDetails.innerHTML = `
             <h3>${station.name}</h3>
+            <p><strong>Country:</strong> ${station.country}</p>
+            <p><strong>Tags:</strong> ${station.tags || 'None'}</p>
             <audio controls>
                 <source src="${station.url_resolved}" type="audio/mpeg">
                 Your browser does not support the audio element.
@@ -94,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingIndicator.style.display = isLoading ? 'block' : 'none';
     }
 
-    // Event listener for search bar
+    // Event listeners for filters
     searchBar.addEventListener('input', filterStations);
 
     // Initial fetch
