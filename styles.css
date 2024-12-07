@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: black;
@@ -27,6 +27,7 @@ header h1 {
 
 #controls-and-filters {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     width: 90%;
@@ -41,6 +42,7 @@ header h1 {
     background-color: black;
     border: 1px solid white;
     text-align: center;
+    min-width: 250px;
 }
 
 #station-info h3 {
@@ -55,7 +57,9 @@ header h1 {
 
 #filters {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
 }
 
 #filters input,
@@ -66,6 +70,7 @@ header h1 {
     background-color: black;
     color: white;
     font-size: 1rem;
+    min-width: 150px;
 }
 
 #map-container {
@@ -82,4 +87,17 @@ header h1 {
 #loading {
     font-size: 1rem;
     color: white;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    #controls-and-filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #station-info {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }

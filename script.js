@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Filter and display stations
+    // Filter stations and focus on the map
     function filterStations() {
         const searchQuery = searchBar.value.toLowerCase();
         const selectedGenre = genreFilter.value;
@@ -65,6 +65,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         displayStationsOnMap(filteredStations);
+
+        if (filteredStations.length === 1) {
+            const station = filteredStations[0];
+            if (station.geo_lat && station.geo_long) {
+                map.setView([station.geo_lat, station.geo_long], 10); // Zoom in on the station
+                displayStationInfo(station);
+            }
+        }
     }
 
     // Display stations on the map
