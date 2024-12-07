@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'SF Pro Display', sans-serif;
     margin: 0;
     padding: 0;
     background-color: black;
@@ -14,39 +14,38 @@ header {
     background-color: black;
     padding: 20px;
     text-align: center;
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid #333;
 }
 
 header h1 {
     font-size: 2.5rem;
+    font-weight: 600;
     color: white;
     margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
 #controls-and-filters {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
 }
 
 #station-info {
-    flex: 1;
-    margin-right: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: black;
-    border: 1px solid white;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #111;
+    border: 1px solid #333;
     text-align: center;
-    min-width: 250px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px;
 }
 
 #station-info h3 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0;
 }
 
@@ -56,27 +55,31 @@ header h1 {
 }
 
 #filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
 }
 
-#filters input,
-#filters select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid white;
+#filters input {
+    padding: 15px;
+    border-radius: 30px;
+    border: 1px solid #333;
     background-color: black;
     color: white;
     font-size: 1rem;
-    min-width: 150px;
+    width: 300px;
+    outline: none;
+}
+
+#filters input::placeholder {
+    color: #aaa;
 }
 
 #map-container {
     margin: 20px 0;
     height: 600px;
-    background-color: white;
+    background-color: #111;
+    border-top: 1px solid #333;
 }
 
 #map {
@@ -86,18 +89,12 @@ header h1 {
 
 #loading {
     font-size: 1rem;
-    color: white;
+    color: #ccc;
 }
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
-    #controls-and-filters {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #station-info {
-        margin-right: 0;
-        margin-bottom: 20px;
+    #filters input {
+        width: 90%;
     }
 }

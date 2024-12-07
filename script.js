@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const stationDetails = document.getElementById('station-details');
     const loadingIndicator = document.getElementById('loading');
     const searchBar = document.getElementById('search-bar');
-    const genreFilter = document.getElementById('genre-filter');
-    const countryFilter = document.getElementById('country-filter');
     let allMarkers = [];
     let currentStations = [];
-    let currentBounds = null;
 
     // Initialize Leaflet Map
     const map = L.map('map').setView([20, 0], 2);
@@ -15,23 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-
-    // Fetch and populate country dropdown
-    async function fetchCountries() {
-        const apiUrl = 'https://de1.api.radio-browser.info/json/countries';
-        try {
-            const response = await fetch(apiUrl);
-            const countries = await response.json();
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.name;
-                option.textContent = country.name;
-                countryFilter.appendChild(option);
-            });
-        } catch (error) {
-            console.error('Error fetching countries:', error);
-        }
-    }
 
     // Fetch stations
     async function fetchStations() {
@@ -51,18 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Filter stations and focus on the map
+    // Filter stations based on search
     function filterStations() {
         const searchQuery = searchBar.value.toLowerCase();
-        const selectedGenre = genreFilter.value;
-        const selectedCountry = countryFilter.value;
 
-        const filteredStations = currentStations.filter(station => {
-            const matchesSearch = station.name.toLowerCase().includes(searchQuery);
-            const matchesGenre = selectedGenre === 'all' || station.tags.includes(selectedGenre);
-            const matchesCountry = selectedCountry === 'all' || station.country === selectedCountry;
-            return matchesSearch && matchesGenre && matchesCountry;
-        });
+        const filteredStations = currentStations.filter(station =>
+            station.name.toLowerCase().includes(searchQuery)
+        );
 
         displayStationsOnMap(filteredStations);
 
@@ -87,8 +62,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         stations.forEach(station => {
             if (station.geo_lat && station.geo_long) {
-                const marker = L.marker([station.geo_lat, station.geo_long]).addTo(map);
-                marker.bindPopup(`<strong>${station.name}</strong><br>${station.country}`);
+                const marker = L.circleMarker([station.geo_lat, station.geo_long], {
+                    radius: 6,
+                    fillColor: '#000',
+                    color: '#fff',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map);
+
+                marker.bindPopup(`<strong>${station.name}</strong>`);
                 marker.on('click', () => displayStationInfo(station));
                 allMarkers.push(marker);
             }
@@ -99,8 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayStationInfo(station) {
         stationDetails.innerHTML = `
             <h3>${station.name}</h3>
-            <p><strong>Country:</strong> ${station.country}</p>
-            <p><strong>Tags:</strong> ${station.tags || 'None'}</p>
             <audio controls>
                 <source src="${station.url_resolved}" type="audio/mpeg">
                 Your browser does not support the audio element.
@@ -113,12 +94,9 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingIndicator.style.display = isLoading ? 'block' : 'none';
     }
 
-    // Event listeners for filters
+    // Event listener for search bar
     searchBar.addEventListener('input', filterStations);
-    genreFilter.addEventListener('change', filterStations);
-    countryFilter.addEventListener('change', filterStations);
 
-    // Initial fetches
-    fetchCountries();
+    // Initial fetch
     fetchStations();
 });
