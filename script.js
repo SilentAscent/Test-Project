@@ -1,23 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const countryFilter = document.getElementById('country-filter');
-    const genreFilter = document.getElementById('genre-filter');
-    const moodFilter = document.getElementById('mood-filter');
+    const stationDetails = document.getElementById('station-details');
+    const loadingIndicator = document.getElementById('loading');
     const searchBar = document.getElementById('search-bar');
-    const stationContainer = document.getElementById('stations');
+    const genreFilter = document.getElementById('genre-filter');
+    const countryFilter = document.getElementById('country-filter');
+    let allMarkers = [];
+    let currentStations = [];
+    let currentBounds = null;
 
-    let allStations = []; // Store all stations for filtering
+    // Initialize Leaflet Map
+    const map = L.map('map').setView([20, 0], 2);
 
-    // Fetch available countries and populate the dropdown
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Fetch and populate country dropdown
     async function fetchCountries() {
         const apiUrl = 'https://de1.api.radio-browser.info/json/countries';
         try {
             const response = await fetch(apiUrl);
             const countries = await response.json();
-
             countries.forEach(country => {
                 const option = document.createElement('option');
                 option.value = country.name;
-                option.textContent = `${country.name} (${country.stationcount} stations)`;
+                option.textContent = country.name;
                 countryFilter.appendChild(option);
             });
         } catch (error) {
@@ -25,87 +33,84 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Fetch and display radio stations based on filters
-    async function fetchStations(filters = {}) {
-        let apiUrl = 'https://de1.api.radio-browser.info/json/stations';
-
-        if (filters.country && filters.country !== 'all') {
-            apiUrl = `https://de1.api.radio-browser.info/json/stations/bycountry/${encodeURIComponent(filters.country)}`;
-        } else if (filters.genre && filters.genre !== 'all') {
-            apiUrl = `https://de1.api.radio-browser.info/json/stations/bytag/${encodeURIComponent(filters.genre)}`;
-        } else if (filters.mood && filters.mood !== 'all') {
-            apiUrl = `https://de1.api.radio-browser.info/json/stations/bytag/${encodeURIComponent(filters.mood)}`;
-        }
-
+    // Fetch stations
+    async function fetchStations() {
+        const apiUrl = 'https://de1.api.radio-browser.info/json/stations';
+        showLoading(true);
         try {
             const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error(`API returned status: ${response.status}`);
             const stations = await response.json();
-            allStations = stations || [];
-            applyFiltersAndDisplay();
+            currentStations = stations;
+            displayStationsOnMap(stations);
+            showLoading(false);
         } catch (error) {
             console.error('Error fetching stations:', error);
-            stationContainer.innerHTML = '<p>Error loading stations. Please try again later.</p>';
+            stationDetails.innerHTML = '<h3>Error loading stations</h3>';
+            showLoading(false);
         }
     }
 
-    // Apply filters and display stations
-    function applyFiltersAndDisplay() {
-        const query = searchBar.value.toLowerCase();
-        const filteredStations = allStations.filter(station => {
-            return station.name.toLowerCase().includes(query);
+    // Filter and display stations
+    function filterStations() {
+        const searchQuery = searchBar.value.toLowerCase();
+        const selectedGenre = genreFilter.value;
+        const selectedCountry = countryFilter.value;
+
+        const filteredStations = currentStations.filter(station => {
+            const matchesSearch = station.name.toLowerCase().includes(searchQuery);
+            const matchesGenre = selectedGenre === 'all' || station.tags.includes(selectedGenre);
+            const matchesCountry = selectedCountry === 'all' || station.country === selectedCountry;
+            return matchesSearch && matchesGenre && matchesCountry;
         });
 
-        displayStations(filteredStations);
+        displayStationsOnMap(filteredStations);
     }
 
-    // Display stations in a grid
-    function displayStations(stations) {
-        stationContainer.innerHTML = ''; // Clear previous stations
+    // Display stations on the map
+    function displayStationsOnMap(stations) {
+        allMarkers.forEach(marker => map.removeLayer(marker));
+        allMarkers = [];
 
-        if (!stations || stations.length === 0) {
-            stationContainer.innerHTML = '<p>No stations found for this filter.</p>';
+        if (stations.length === 0) {
+            stationDetails.innerHTML = '<h3>No stations found</h3>';
             return;
         }
 
-        stations.slice(0, 20).forEach(station => {
-            if (!station.url_resolved || station.url_resolved === "") {
-                return; // Skip invalid stations
+        stations.forEach(station => {
+            if (station.geo_lat && station.geo_long) {
+                const marker = L.marker([station.geo_lat, station.geo_long]).addTo(map);
+                marker.bindPopup(`<strong>${station.name}</strong><br>${station.country}`);
+                marker.on('click', () => displayStationInfo(station));
+                allMarkers.push(marker);
             }
-
-            const stationElement = document.createElement('div');
-            stationElement.className = 'station';
-
-            stationElement.innerHTML = `
-                <h3>${station.name}</h3>
-                <p>${station.country}</p>
-                <audio controls>
-                    <source src="${station.url_resolved}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            `;
-
-            stationContainer.appendChild(stationElement);
         });
     }
 
+    // Display station info
+    function displayStationInfo(station) {
+        stationDetails.innerHTML = `
+            <h3>${station.name}</h3>
+            <p><strong>Country:</strong> ${station.country}</p>
+            <p><strong>Tags:</strong> ${station.tags || 'None'}</p>
+            <audio controls>
+                <source src="${station.url_resolved}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        `;
+    }
+
+    // Show or hide loading indicator
+    function showLoading(isLoading) {
+        loadingIndicator.style.display = isLoading ? 'block' : 'none';
+    }
+
     // Event listeners for filters
-    countryFilter.addEventListener('change', function () {
-        fetchStations({ country: countryFilter.value });
-    });
+    searchBar.addEventListener('input', filterStations);
+    genreFilter.addEventListener('change', filterStations);
+    countryFilter.addEventListener('change', filterStations);
 
-    genreFilter.addEventListener('change', function () {
-        fetchStations({ genre: genreFilter.value });
-    });
-
-    moodFilter.addEventListener('change', function () {
-        fetchStations({ mood: moodFilter.value });
-    });
-
-    searchBar.addEventListener('input', function () {
-        applyFiltersAndDisplay();
-    });
-
-    // Initial data fetch
-    fetchCountries(); // Populate the country dropdown
-    fetchStations(); // Load all stations by default
+    // Initial fetches
+    fetchCountries();
+    fetchStations();
 });

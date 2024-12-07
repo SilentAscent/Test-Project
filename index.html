@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radiowaves</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <main>
-        <section id="home">
-            <div class="hero">
-                <h1>Radiowaves</h1>
-                <p>Discover music, moods, and genres from around the world.</p>
+    <header>
+        <h1>Radiowaves</h1>
+        <div id="controls-and-filters">
+            <div id="station-info">
+                <div id="loading">Loading Stations...</div>
+                <div id="station-details">
+                    <h3>Select a station to play</h3>
+                </div>
             </div>
-        </section>
-        <section id="stations-container">
-            <div class="filters">
+            <div id="filters">
                 <input type="text" id="search-bar" placeholder="Search for a station..." />
                 <select id="genre-filter">
                     <option value="all">All Genres</option>
@@ -26,26 +28,15 @@
                     <option value="classical">Classical</option>
                     <option value="hiphop">Hip Hop</option>
                 </select>
-                <select id="mood-filter">
-                    <option value="all">All Moods</option>
-                    <option value="happy">Happy</option>
-                    <option value="chill">Chill</option>
-                    <option value="energetic">Energetic</option>
-                    <option value="romantic">Romantic</option>
-                </select>
                 <select id="country-filter">
-                    <option value="all">All Locations</option>
+                    <option value="all">All Countries</option>
                 </select>
             </div>
-            <div id="stations">Loading stations...</div>
-        </section>
-        <section id="about">
-            <h2>About Radiowaves</h2>
-            <p>Radiowaves connects you to the best music and radio from around the world, tailored to your moods and genres.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <p>Email: support@radiowaves.com</p>
+        </div>
+    </header>
+    <main>
+        <section id="map-container">
+            <div id="map"></div>
         </section>
     </main>
     <script src="script.js"></script>

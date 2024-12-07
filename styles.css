@@ -3,89 +3,83 @@ body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #0d1117;
-    color: #c9d1d9;
+    background-color: black;
+    color: white;
 }
 
-h1, h2 {
-    color: #58a6ff;
-}
-
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.hero {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #161b22;
-    border-radius: 10px;
-    margin: 20px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px #58a6ff;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    color: #c9d1d9;
-}
-
-.filters {
+header {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 20px 0;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid white;
 }
 
-.filters input,
-.filters select {
+header h1 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#controls-and-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+}
+
+#station-info {
+    flex: 1;
+    margin-right: 20px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #30363d;
-    background-color: #161b22;
-    color: #c9d1d9;
+    background-color: black;
+    border: 1px solid white;
+    text-align: center;
+}
+
+#station-info h3 {
     font-size: 1rem;
-    width: 200px;
+    margin: 0;
 }
 
-#stations {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 20px auto;
-    padding: 10px;
-}
-
-.station {
-    background-color: #161b22;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.station h3 {
-    margin-bottom: 10px;
-    color: #58a6ff;
-}
-
-audio {
-    width: 100%;
+#station-info audio {
     margin-top: 10px;
+    width: 100%;
 }
 
-#about, #contact {
+#filters {
+    display: flex;
+    gap: 10px;
+}
+
+#filters input,
+#filters select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+}
+
+#map-container {
     margin: 20px 0;
-    padding: 20px;
-    background-color: #161b22;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    height: 600px;
+    background-color: white;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#loading {
+    font-size: 1rem;
+    color: white;
 }
