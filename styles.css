@@ -345,35 +345,71 @@ audio {
         padding: 10px;
     }
 
+    .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ghost-button,
+    .primary-button,
+    .icon-button {
+        min-height: 44px;
+    }
+
+    .map-stage {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
     #map {
-        min-height: 1040px;
+        order: 0;
+        height: 52vh;
+        min-height: 420px;
         border-radius: 22px;
     }
 
-    .meta-overlay {
-        top: 74px;
-        left: 12px;
+    .overlay {
+        position: static;
+        width: 100%;
+        transform: none;
+        border-radius: 18px;
     }
 
-    .search-overlay,
-    .filters-overlay,
-    .station-list-overlay,
-    .player-overlay {
-        left: 12px;
-        right: 12px;
-        width: auto;
-        transform: none;
+    .search-overlay {
+        order: 1;
+    }
+
+    .meta-overlay {
+        order: 2;
     }
 
     .filters-overlay {
-        bottom: 274px;
+        order: 3;
     }
 
     .station-list-overlay {
-        bottom: 124px;
+        order: 4;
+        max-height: none;
+    }
+
+    .station-list {
+        max-height: 220px;
     }
 
     .player-overlay {
-        bottom: 12px;
+        order: 5;
+        position: sticky;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+        z-index: 650;
+        margin-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);
+    }
+
+    .player-controls {
+        gap: 10px;
+    }
+
+    audio {
+        min-height: 42px;
     }
 }
