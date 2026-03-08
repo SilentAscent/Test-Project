@@ -5,30 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radiowaves</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <img src="assets/radiowaves-logo.png" alt="Radiowaves Logo" id="logo">
-        <div id="controls-and-filters">
-            <div id="station-info">
-                <div id="loading">Loading Stations...</div>
-                <div id="station-details">
-                    <h3>Select a station to play</h3>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <img src="assets/radiowaves-logo.png" alt="Radiowaves Logo" id="logo">
+                <div>
+                    <p class="eyebrow">Radiowaves</p>
                 </div>
             </div>
-            <div id="filters">
-                <input type="text" id="search-bar" placeholder="Search for a station..." />
+
+            <div class="topbar-actions">
+                <button type="button" id="favorites-toggle" class="ghost-button">Favorites</button>
+                <button type="button" id="random-button" class="ghost-button">Random</button>
             </div>
-        </div>
-    </header>
-    <main>
-        <section id="map-container">
+        </header>
+
+        <main class="map-stage">
             <div id="map"></div>
-        </section>
-    </main>
+
+            <div class="overlay search-overlay">
+                <input type="text" id="search-bar" placeholder="Search stations" autocomplete="off">
+            </div>
+
+            <div class="overlay meta-overlay">
+                <p id="loading" class="status-text">Loading stations...</p>
+                <p id="timer-status" class="status-text muted"></p>
+                <p id="results-summary" class="status-text muted">0 visible</p>
+            </div>
+
+            <div class="overlay filters-overlay">
+                <div id="tag-filters" class="chip-grid"></div>
+            </div>
+
+            <aside class="overlay station-list-overlay">
+                <div class="overlay-heading">
+                    <p class="eyebrow">Stations</p>
+                    <span id="station-count">0 stations</span>
+                </div>
+                <div id="station-list" class="station-list"></div>
+            </aside>
+
+            <article class="overlay player-overlay">
+                <div class="player-meta">
+                    <p class="eyebrow">Now Playing</p>
+                    <button type="button" id="favorite-button" class="icon-button" aria-label="Toggle favorite">Save</button>
+                </div>
+                <h2 id="station-title">Select a station</h2>
+                <div id="station-details" class="station-details">
+                    <p>Choose a station from the map or the list to start streaming.</p>
+                </div>
+                <div class="player-controls">
+                    <button type="button" id="play-toggle" class="primary-button" disabled>Play</button>
+                    <audio id="audio-player" controls preload="none"></audio>
+                </div>
+            </article>
+        </main>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
